@@ -39,18 +39,18 @@ async function updateOpportunityIDs() {
       }
     });
 
-    // Go through the ONBOARDING rows and update Opportunity_IDs
+    // Map ONBOARDING rows and update Opportunity_IDs with new generated ones
     onboardingRows.forEach((row) => {
       const originalOpportunityID = normalizeID(row.Opportunity_ID);
 
-      // If this Opportunity_ID has not been updated yet, create a new one
-      if (originalOpportunityID && !opportunityIDMapping.has(originalOpportunityID)) {
-        increment += 1; // Increment the Opportunity_ID format for each found ID
-        opportunityIDMapping.set(originalOpportunityID, `AlasDooQaAutoGenJjkkll+${increment}`);
-      }
-
-      // Update the ONBOARDING Opportunity_ID with the new mapped ID
+      // If the Opportunity_ID is not empty, map it to a new ID
       if (originalOpportunityID) {
+        if (!opportunityIDMapping.has(originalOpportunityID)) {
+          increment += 1; // Increment the Opportunity_ID format for each found ID
+          opportunityIDMapping.set(originalOpportunityID, `AutoGenOppId+${increment}`);
+        }
+
+        // Update the ONBOARDING Opportunity_ID with the new mapped ID
         row.Opportunity_ID = opportunityIDMapping.get(originalOpportunityID);
       }
     });
@@ -58,8 +58,19 @@ async function updateOpportunityIDs() {
     // Now, ensure that all Opportunity_IDs in UMS are updated based on the mapping
     umsRows.forEach((row) => {
       const originalOpportunityID = normalizeID(row.Opportunity_ID);
+
+      // If Opportunity_ID is not empty and exists in the mapping, update it
       if (originalOpportunityID && opportunityIDMapping.has(originalOpportunityID)) {
         row.Opportunity_ID = opportunityIDMapping.get(originalOpportunityID);
+      } else if (!originalOpportunityID) {
+        // If the Opportunity_ID is empty, leave it empty
+        row.Opportunity_ID = ""; // Optionally, you can remove this line if you want it to remain null or undefined
+      } else {
+        // If UMS has an Opportunity_ID that is not in the mapping, assign it a new value
+        increment += 1;
+        const newOpportunityID = `AutoGenOppId+${increment}`;
+        row.Opportunity_ID = newOpportunityID;
+        opportunityIDMapping.set(originalOpportunityID, newOpportunityID);
       }
     });
 
@@ -91,6 +102,7 @@ function writeCSV(filePath, rows) {
 
 // Run the update process
 updateOpportunityIDs();
+
 
 
 

@@ -27,7 +27,7 @@ function writeCSV(outputFile, data) {
 }
 
 // Usage
-modifyOnboardingFile('Modified_ONBOARDING_NG.csv', 'Modified_ONBOARDING_NG_output.csv');
+modifyOnboardingFile('Modified_ONBOARDING_NG.csv', 'Modified_ONBOARDING_NG.csv');
 
 
 //name installed product name set for ONBOARDING

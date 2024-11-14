@@ -27,7 +27,7 @@ function writeCSV(outputFile, data) {
 }
 
 // Usage
-modifyUMSFile('Modified_UMS_NG.csv', 'Modified_UMS_NG_output.csv');
+modifyUMSFile('Modified_UMS_NG.csv', 'Modified_UMS_NG.csv');
 
 
 //name installed product name set for UMS
