@@ -356,7 +356,7 @@ const processCSV = (inputFile, outputFile) => {
                 .write(rows, { headers: true })
                 .pipe(ws)
                 .on('finish', () => {
-                    console.log('CSV processing and saving complete!');
+                    console.log('spojeniii material numbersss!');
                 });
         });
 };

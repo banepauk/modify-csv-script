@@ -7,7 +7,8 @@ const ONBOARDING_FILE = 'Modified_ONBOARDING_NG.csv';
 // List of random real full names for the Coordinator field
 const randomNames = [
   "John Doe", "Jane Smith", "Alice Johnson", "Bob Brown", "Emily White", "Michael Harris",
-  "Sarah Lee", "David Walker", "Linda Clark", "James Lewis"
+  "Sarah Lee", "David Walker", "Linda Clark", "James Lewis", "Roy Emerson", "Jared Butler", "Anna Mason", 
+  "Mike Powell", "Mo Liamson", "Liam Grey", "Lora Waldon", "Reggie Jackson"
 ];
 
 // Function to read a CSV file and return its rows as an array of objects
@@ -99,9 +100,9 @@ async function updateOnboarding() {
     // Write the updated rows back to the CSV file
     await writeCSV(ONBOARDING_FILE, onboardingRows);
 
-    console.log('Onboarding file updated successfully.');
+    console.log('Iiiide onboarding fajl.');
   } catch (err) {
-    console.error('Error updating Onboarding file:', err);
+    console.error('greska:', err);
   }
 }
 

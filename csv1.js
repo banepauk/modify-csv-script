@@ -138,9 +138,9 @@ const writeCSV = (filePath, data) => {
         await writeCSV(onboardingFilePath, onboardingData);
         await writeCSV(umsFilePath, umsData);
 
-        console.log("Files updated successfully with consistent replacements!");
+        console.log("ide gas, gotovi systemREF, deviceSN i materialNum");
     } catch (error) {
-        console.error("Error processing files:", error);
+        console.error("ubistvo:", error);
     }
 })();
 

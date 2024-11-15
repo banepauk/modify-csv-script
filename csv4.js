@@ -78,9 +78,9 @@ async function updateOpportunityIDs() {
     await writeCSV(UMS_FILE, umsRows);
     await writeCSV(ONBOARDING_FILE, onboardingRows);
 
-    console.log('Opportunity_IDs updated successfully in both files.');
+    console.log('Uspesan update Opportunity_IDs u oba fajla, idemoooooo.');
   } catch (err) {
-    console.error('Error updating Opportunity_IDs:', err);
+    console.error('opet neka greska:', err);
   }
 }
 

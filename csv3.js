@@ -15,7 +15,7 @@ function modifyUMSFile(inputFile, outputFile) {
     })
     .on('end', () => {
       writeCSV(outputFile, results);
-      console.log(`Finished processing ${inputFile}`);
+      console.log(`gotov installed product name, opaaa`);
     });
 }
 

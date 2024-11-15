@@ -15,7 +15,7 @@ function modifyOnboardingFile(inputFile, outputFile) {
     })
     .on('end', () => {
       writeCSV(outputFile, results);
-      console.log(`Finished processing ${inputFile}`);
+      console.log(`name installed za onboarding - done`);
     });
 }
 

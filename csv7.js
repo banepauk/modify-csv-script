@@ -13,10 +13,18 @@ const randomWebsite = () => `https://testsite${Math.floor(Math.random() * 1000)}
 
 // Preset values
 const usCities = {
-  "New York": { state: "NY", street: ["5th Ave", "Broadway", "Wall St"], zip: ["10001", "10002", "10003"] },
-  "Los Angeles": { state: "CA", street: ["Sunset Blvd", "Hollywood Blvd", "Rodeo Dr"], zip: ["90001", "90002", "90003"] },
-  "Chicago": { state: "IL", street: ["Magnificent Mile", "Wacker Dr", "State St"], zip: ["60601", "60602", "60603"] },
-  "Houston": { state: "TX", street: ["Westheimer Rd", "Kirby Dr", "Fannin St"], zip: ["77001", "77002", "77003"] }
+  "New York": { state: "New York", street: ["5th Ave", "Broadway", "Wall St"], zip: ["10001", "10002", "10003"] },
+  "Los Angeles": { state: "California", street: ["Sunset Blvd", "Hollywood Blvd", "Rodeo Dr"], zip: ["90001", "90002", "90003"] },
+  "Chicago": { state: "Illinois", street: ["Magnificent Mile", "Wacker Dr", "State St"], zip: ["60601", "60602", "60603"] },
+  "Houston": { state: "Texas", street: ["Westheimer Rd", "Kirby Dr", "Fannin St"], zip: ["77001", "77002", "77003"] },
+  "Phoenix": { state: "Arizona", street: ["Camelback Rd", "Glendale Ave", "Central Ave"], zip: ["85001", "85002", "85003"] },
+  "Philadelphia": { state: "Pennsylvania", street: ["Market St", "Broad St", "Chestnut St"], zip: ["19101", "19102", "19103"] },
+  "Miami": { state: "Florida", street: ["Ocean Dr", "Collins Ave", "Biscayne Blvd"], zip: ["33101", "33102", "33103"] },
+  "Denver": { state: "Colorado", street: ["Colfax Ave", "Broadway St", "16th St"], zip: ["80201", "80202", "80203"] },
+  "Boston": { state: "Massachusetts", street: ["Beacon St", "Boylston St", "Commonwealth Ave"], zip: ["02101", "02102", "02103"] },
+  "Seattle": { state: "Washington", street: ["Pike St", "Broadway Ave", "4th Ave"], zip: ["98101", "98102", "98103"] },
+  "Minneapolis": { state: "Minnesota", street: ["Hennepin Ave", "Washington Ave", "Lake St"], zip: ["55101", "55102", "55103"] }
+
 };
 
 const clinicTypes = [
@@ -117,9 +125,9 @@ const processCSV = () => {
 
       csvWriter.writeRecords(rows)
         .then(() => {
-          console.log('CSV file successfully processed and saved.');
+          console.log('Useri su kompletiraniiiii.');
         })
-        .catch(err => console.error('Error writing CSV file:', err));
+        .catch(err => console.error('Opet neko sranje:', err));
     });
 };
 
