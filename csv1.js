@@ -1,12 +1,9 @@
 const fs = require('fs');
 const csvParser = require('csv-parser');
 const csvWriter = require('csv-writer').createObjectCsvWriter;
-
-// Define file paths
 const onboardingFilePath = 'Modified_ONBOARDING_NG.csv';
 const umsFilePath = 'Modified_UMS_NG.csv';
 
-// Define replacement values for System_REF and Material_Number
 const replacementValues = [
     'GA-0000070BE', 'GA-0000070BEGR', 'GA-0000070CNBE', 'GA-0000070DEBE', 'GA-0000070GRBE', 'GA-0000070SH',
     'GA-0000080BE', 'GA-0000080CN', 'GA-0000080CNBE', 'GA-0000110BE', 'GA-0000120BE', 'GA-0000120CNBE',
@@ -52,32 +49,28 @@ const replacementValues = [
     'RGA-4000000', 'RGA-4000070', 'GA-3000090CE', 'RGA-4000090'
 ];
 
-let replacementIndex = 0; // Keep track of which replacement value to use
-
-// Initialize device serial number
+let replacementIndex = 0; 
 let deviceSerialCounter = 1;
 
-// Helper function to get a replacement System_REF or Material_Number
+// get a replacement System_REF or Material_Number
 const getReplacementValue = () => replacementValues[replacementIndex++ % replacementValues.length];
 
-// Helper function to generate the Device_SN
 const generateDeviceSN = () => `AutoGenWEDOQA${deviceSerialCounter++}`;
 
-// Dictionaries to track replacement mappings for consistent values
 const deviceSNMap = {};
 const systemRefMap = {};
 const materialNumberMap = {};
 
-// Function to get or create a consistent replacement value
+// get or create a consistent replacement value
 const getOrCreateReplacement = (originalValue, map, generator) => {
-    if (!originalValue) return ""; // If the original value is empty, return it as-is
+    if (!originalValue) return ""; // if the original value is empty, return it as it is
     if (!map[originalValue]) {
         map[originalValue] = generator();
     }
     return map[originalValue];
 };
 
-// Read CSV file
+// read CSV file
 const readCSV = (filePath) => {
     return new Promise((resolve, reject) => {
         const data = [];
@@ -89,24 +82,22 @@ const readCSV = (filePath) => {
     });
 };
 
-// Write CSV file
+// write CSV file
 const writeCSV = (filePath, data) => {
     const header = Object.keys(data[0]).map((key) => ({ id: key, title: key }));
     const writer = csvWriter({ path: filePath, header });
     return writer.writeRecords(data);
 };
 
-// Main function
 (async () => {
     try {
-        // Load both CSV files
+        // load both CSV files
         const onboardingData = await readCSV(onboardingFilePath);
         const umsData = await readCSV(umsFilePath);
 
-        // Create a map to track all existing entries based on their Name_Installed_Product for cross-file consistency
         const allDataMap = {}; // { Name_Installed_Product: { Device_SN, System_REF/Material_Number } }
 
-        // Populate the map with entries from ONBOARDING and UMS for a global reference of original values
+        // populate the map with entries from ONBOARDING and UMS for a global reference of original values
         onboardingData.forEach((row) => {
             const { Name_Installed_Product, Device_SN, System_REF } = row;
             if (!allDataMap[Name_Installed_Product]) allDataMap[Name_Installed_Product] = {};
@@ -121,7 +112,7 @@ const writeCSV = (filePath, data) => {
             allDataMap[Name_Installed_Product].Material_Number = Material_Number;
         });
 
-        // Update ONBOARDING and UMS data with consistent new values
+        // update ONBOARDING and UMS data with consistent new values
         onboardingData.forEach((row) => {
             const { Name_Installed_Product, Device_SN, System_REF } = row;
             row.Device_SN = getOrCreateReplacement(allDataMap[Name_Installed_Product].Device_SN, deviceSNMap, generateDeviceSN);
@@ -134,7 +125,7 @@ const writeCSV = (filePath, data) => {
             row.Material_Number = getOrCreateReplacement(allDataMap[Name_Installed_Product].Material_Number, materialNumberMap, getReplacementValue);
         });
 
-        // Write the modified data back to the CSV files
+        // write the modified data back to the CSV files
         await writeCSV(onboardingFilePath, onboardingData);
         await writeCSV(umsFilePath, umsData);
 
