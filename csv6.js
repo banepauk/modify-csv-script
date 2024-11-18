@@ -2,16 +2,14 @@ const fs = require('fs');
 const csvParser = require('csv-parser');
 const fastcsv = require('fast-csv');
 
-// Random modalities to assign
 const modalities = ['NdYAG', 'ResurFX', 'QSwitch', 'IPL', 'OPT', 'TrueSpot', 'Incisional', 'CPG', 'DeepFX', 'Test'];
 
-// Function to randomize modality
+// randomize modality
 const randomizeModality = () => {
     const index = Math.floor(Math.random() * modalities.length);
     return modalities[index];
 };
 
-// Material to family mapping
 const materialToFamily = {
     "GA-0000070BE": "Acupulse",
     "GA-0000070BEGR": "Acupulse",
@@ -285,19 +283,19 @@ const materialToFamily = {
 };
 
 
-// Function to generate a new unique contract number
+// generate a new unique contract number
 let contractNumCounter = 1;
 const generateContractNum = () => `AutoGenContractNum${contractNumCounter++}`;
 
-// Function to generate a new unique child material description
+// generate a new unique child material description
 let childMatDescCounter = 1;
 const generateChildMatDesc = () => `AutoGenChildMatDesc${childMatDescCounter++}`;
 
-// Function to generate a new unique child material number
+// generate a new unique child material number
 let childMatNumCounter = 1;
 const generateChildMatNum = () => `AutoGenChildMatNumb${childMatNumCounter++}`;
 
-// Function to process each row
+// process each row
 const processCSV = (inputFile, outputFile) => {
     const rows = [];
     const modalityMap = new Map();
@@ -305,11 +303,10 @@ const processCSV = (inputFile, outputFile) => {
     const childMatDescMap = new Map();
     const childMatNumMap = new Map();
 
-    // Read the CSV
+    // read the CSV
     fs.createReadStream(inputFile)
         .pipe(csvParser())
         .on('data', (row) => {
-            // Handle Modality_REF: Randomize with unique values
             if (row.Modality_REF) {
                 if (!modalityMap.has(row.Modality_REF)) {
                     modalityMap.set(row.Modality_REF, randomizeModality());
@@ -317,7 +314,6 @@ const processCSV = (inputFile, outputFile) => {
                 row.Modality_REF = modalityMap.get(row.Modality_REF);
             }
 
-            // Handle Contract_Number: Unique auto-generated numbers
             if (row.Contract_Number) {
                 if (!contractNumMap.has(row.Contract_Number)) {
                     contractNumMap.set(row.Contract_Number, generateContractNum());
@@ -325,7 +321,6 @@ const processCSV = (inputFile, outputFile) => {
                 row.Contract_Number = contractNumMap.get(row.Contract_Number);
             }
 
-            // Handle Child_Material_Description: Unique auto-generated descriptions
             if (row.Child_Material_Description) {
                 if (!childMatDescMap.has(row.Child_Material_Description)) {
                     childMatDescMap.set(row.Child_Material_Description, generateChildMatDesc());
@@ -333,7 +328,7 @@ const processCSV = (inputFile, outputFile) => {
                 row.Child_Material_Description = childMatDescMap.get(row.Child_Material_Description);
             }
 
-            // Handle Child_Material_Number: Unique auto-generated numbers
+    
             if (row.Child_Material_Number) {
                 if (!childMatNumMap.has(row.Child_Material_Number)) {
                     childMatNumMap.set(row.Child_Material_Number, generateChildMatNum());
@@ -341,16 +336,13 @@ const processCSV = (inputFile, outputFile) => {
                 row.Child_Material_Number = childMatNumMap.get(row.Child_Material_Number);
             }
 
-            // Handle Item_Material_Family: Based on Material_Number
             if (row.Material_Number && materialToFamily[row.Material_Number]) {
                 row.Item_Material_Family = materialToFamily[row.Material_Number];
             }
 
-            // Push processed row
             rows.push(row);
         })
         .on('end', () => {
-            // Write processed rows back to a new CSV file
             const ws = fs.createWriteStream(outputFile);
             fastcsv
                 .write(rows, { headers: true })
@@ -361,5 +353,5 @@ const processCSV = (inputFile, outputFile) => {
         });
 };
 
-// Call the processCSV function
+
 processCSV('Modified_UMS_NG.csv', 'Modified_UMS_NG.csv');

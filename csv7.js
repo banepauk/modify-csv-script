@@ -3,15 +3,13 @@ const path = require('path');
 const csv = require('csv-parser');
 const { createObjectCsvWriter } = require('csv-writer');
 
-// Define file paths
 const inputFilePath = path.join(__dirname, 'Modified_USERS_NG.csv');
 const outputFilePath = path.join(__dirname, 'Modified_USERS_NG.csv');
 
-// Random generators for different fields
+// generators for different fields
 const randomSixDigitNumber = () => Math.floor(100000 + Math.random() * 900000);
 const randomWebsite = () => `https://testsite${Math.floor(Math.random() * 1000)}.com`;
 
-// Preset values
 const usCities = {
   "New York": { state: "New York", street: ["5th Ave", "Broadway", "Wall St"], zip: ["10001", "10002", "10003"] },
   "Los Angeles": { state: "California", street: ["Sunset Blvd", "Hollywood Blvd", "Rodeo Dr"], zip: ["90001", "90002", "90003"] },
@@ -40,7 +38,7 @@ const positionsInClinic = [
 ];
 const titles = ["Ms.", "Miss", "Mrs.", "Mr.", "Dr.", "Prof.", "Test"];
 
-// Track generated values for repeat mapping
+//generated values for repeat mapping
 const sapIdMap = {};
 const salesforceContactIdMap = {};
 let salesforceContactIdCounter = 1;
@@ -57,14 +55,13 @@ const phoneNumbers = Array.from({ length: 10 }, generateRandomPhoneNumber);
 // Function to pick a random item from an array
 const getRandomItem = (array) => array[Math.floor(Math.random() * array.length)];
 
-// Process CSV
+// process CSV
 const processCSV = () => {
   const rows = [];
 
   fs.createReadStream(inputFilePath)
     .pipe(csv())
     .on('data', (row) => {
-      // Modify fields as per requirements
 
       // SapID__c
       if (row.SapID__c && row.SapID__c.trim()) {

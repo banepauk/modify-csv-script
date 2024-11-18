@@ -7,7 +7,7 @@ function modifyUMSFile(inputFile, outputFile) {
   fs.createReadStream(inputFile)
     .pipe(csv())
     .on('data', (row) => {
-      // Modify Name_Installed_Product if it's not empty and both Material_Number and Device_SN are present
+      // modify Name_Installed_Product if its not empty and both Material_Number and Device_SN are present
       if (row['Name_Installed_Product'] && row['Material_Number'] && row['Device_SN']) {
         row['Name_Installed_Product'] = `${row['Material_Number']}:${row['Device_SN']}`;
       }
@@ -26,7 +26,6 @@ function writeCSV(outputFile, data) {
   fs.writeFileSync(outputFile, header.join(',') + '\n' + rows);
 }
 
-// Usage
 modifyUMSFile('Modified_UMS_NG.csv', 'Modified_UMS_NG.csv');
 
 

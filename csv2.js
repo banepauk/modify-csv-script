@@ -7,7 +7,7 @@ function modifyOnboardingFile(inputFile, outputFile) {
   fs.createReadStream(inputFile)
     .pipe(csv())
     .on('data', (row) => {
-      // Modify Name_Installed_Product if it's not empty and both System_REF and Device_SN are present
+      // modify Name_Installed_Product if it's not empty and both System_REF and Device_SN are present
       if (row['Name_Installed_Product'] && row['System_REF'] && row['Device_SN']) {
         row['Name_Installed_Product'] = `${row['System_REF']}:${row['Device_SN']}`;
       }
@@ -25,8 +25,6 @@ function writeCSV(outputFile, data) {
 
   fs.writeFileSync(outputFile, header.join(',') + '\n' + rows);
 }
-
-// Usage
 modifyOnboardingFile('Modified_ONBOARDING_NG.csv', 'Modified_ONBOARDING_NG.csv');
 
 
