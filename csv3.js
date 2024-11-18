@@ -1,5 +1,6 @@
 const fs = require('fs');
 const csv = require('csv-parser');
+const fastcsv = require('fast-csv'); // Use fastcsv for proper CSV formatting
 
 function modifyUMSFile(inputFile, outputFile) {
   const results = [];
@@ -7,26 +8,37 @@ function modifyUMSFile(inputFile, outputFile) {
   fs.createReadStream(inputFile)
     .pipe(csv())
     .on('data', (row) => {
-      // modify Name_Installed_Product if its not empty and both Material_Number and Device_SN are present
+      // Modify Name_Installed_Product if conditions are met
       if (row['Name_Installed_Product'] && row['Material_Number'] && row['Device_SN']) {
         row['Name_Installed_Product'] = `${row['Material_Number']}:${row['Device_SN']}`;
       }
       results.push(row);
     })
     .on('end', () => {
+      // Write the modified results to a new CSV file
       writeCSV(outputFile, results);
-      console.log(`gotov installed product name, opaaa`);
+      console.log(`Processing complete. Modified file saved as: ${outputFile}`);
+    })
+    .on('error', (error) => {
+      console.error(`Error reading file: ${error.message}`);
     });
 }
 
 function writeCSV(outputFile, data) {
-  const header = Object.keys(data[0]);
-  const rows = data.map((row) => header.map((field) => row[field]).join(',')).join('\n');
+  const ws = fs.createWriteStream(outputFile);
 
-  fs.writeFileSync(outputFile, header.join(',') + '\n' + rows);
+  fastcsv
+    .write(data, { headers: true, quoteColumns: true }) // Properly handles special characters
+    .pipe(ws)
+    .on('finish', () => {
+      console.log('File successfully written.');
+    })
+    .on('error', (error) => {
+      console.error(`Error writing file: ${error.message}`);
+    });
 }
 
-modifyUMSFile('Modified_UMS_NG.csv', 'Modified_UMS_NG.csv');
-
-
-//name installed product name set for UMS
+// Run the function
+const inputFile = 'Modified_UMS_NG.csv';
+const outputFile = 'Modified_UMS_NG.csv'; // Safer to write to a new file
+modifyUMSFile(inputFile, outputFile);

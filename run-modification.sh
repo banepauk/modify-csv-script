@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Array of files to run
-files=("csv.js" "csv1.js" "csv2.js" "csv3.js" "csv4.js" "csv5.js" "csv6.js" "csv7.js")
+files=("csvInstead.js" "csv1.js" "csv2.js" "csv3.js" "csv4.js" "csv5.js" "csv6.js" "csv7.js")
 
 # Loop through each file and run it in sequence
 for file in "${files[@]}"
