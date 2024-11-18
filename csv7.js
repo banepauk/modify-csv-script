@@ -115,35 +115,35 @@ const processCSV = () => {
         row.Salesforce_Contact_ID = salesforceContactIdMap[row.Salesforce_Contact_ID];
       }
 
-      // Clinic_Type
-      if (row.Clinic_Type && row.Clinic_Type.trim()) {
-        row.Clinic_Type = getRandomItem(clinicTypes);
-      }
+      // // Clinic_Type
+      // if (row.Clinic_Type && row.Clinic_Type.trim()) {
+      //   row.Clinic_Type = getRandomItem(clinicTypes);
+      // }
 
-      // Business_type
-      if (row.Business_type && row.Business_type.trim()) {
-        row.Business_type = getRandomItem(clinicTypes);
-      }
+      // // Business_type
+      // if (row.Business_type && row.Business_type.trim()) {
+      //   row.Business_type = getRandomItem(clinicTypes);
+      // }
 
-      // Contact_title
-      if (row.Contact_title && row.Contact_title.trim()) {
-        row.Contact_title = getRandomItem(titles);
-      }
+      // // Contact_title
+      // if (row.Contact_title && row.Contact_title.trim()) {
+      //   row.Contact_title = getRandomItem(titles);
+      // }
 
-      // Profession
-      if (row.Profession && row.Profession.trim()) {
-        row.Profession = getRandomItem(professions);
-      }
+      // // Profession
+      // if (row.Profession && row.Profession.trim()) {
+      //   row.Profession = getRandomItem(professions);
+      // }
 
-      // Position_in_clinic
-      if (row.Position_in_clinic && row.Position_in_clinic.trim()) {
-        row.Position_in_clinic = getRandomItem(positionsInClinic);
-      }
+      // // Position_in_clinic
+      // if (row.Position_in_clinic && row.Position_in_clinic.trim()) {
+      //   row.Position_in_clinic = getRandomItem(positionsInClinic);
+      // }
 
-      // Customer_Type
-      if (row.Customer_Type && row.Customer_Type.trim()) {
-        row.Customer_Type = "Test";
-      }
+      // // Customer_Type
+      // if (row.Customer_Type && row.Customer_Type.trim()) {
+      //   row.Customer_Type = "Test";
+      // }
 
       rows.push(row);
     })
