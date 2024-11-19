@@ -61,7 +61,7 @@ let salesforceContactIdCounter = 1;
 
 // Generate random phone number
 const generateRandomPhoneNumber = () => {
-  const areaCode = Math.floor(Math.random() * 800) + 200; // Avoid area codes starting with 0 or 1
+  const areaCode = Math.floor(Math.random() * 800) + 200;1
   const lineNumber = Math.floor(Math.random() * 10000);
   return `1-${areaCode}-555-${lineNumber.toString().padStart(4, '0')}`;
 };
@@ -79,26 +79,24 @@ function modifyRow(row) {
 
 
   if (row['BillingCity'] && row['BillingCity'].trim()) {
-    let cityName = row['BillingCity'].trim(); // Remove extra spaces
+    let cityName = row['BillingCity'].trim();
   
-    // Check if the city is valid; if not, replace it with a random valid city
+    // check if the city is valid; if not, replace it with a random valid city
     if (!usCities[cityName]) {
       cityName = getRandomItem(Object.keys(usCities));
-      row['BillingCity'] = cityName; // Update BillingCity to the valid random city
+      row['BillingCity'] = cityName; // update BillingCity to the valid random city
     }
   
-    // Retrieve the details of the selected or replaced city
+    // retrieve the details of the selected or replaced city
     const cityDetails = usCities[cityName];
   
-    // Update all related fields based on the updated or original city
+    // update all related fields based on the updated or original city
     row['BillingStreet'] = getRandomItem(cityDetails.street);
     row['BillingState'] = cityDetails.state;
     row['BillingPostalCode'] = getRandomItem(cityDetails.zip);
   } else {
     console.log(`Invalid or missing BillingCity, skipping row:`, row);
   }
-  
-  
   
   
   // if (row['BillingCity'] && row['BillingCity'].trim()) {
@@ -132,7 +130,7 @@ function modifyRow(row) {
   return row;
 }
 
-// Main function to process CSV
+// main function to process CSV
 function processCSV(inputFile, outputFile) {
   const results = [];
 
@@ -155,7 +153,7 @@ function processCSV(inputFile, outputFile) {
     });
 }
 
-// Function to write modified rows to a new CSV file
+// write modified rows to a new CSV file
 function writeCSV(outputFile, data) {
   const ws = fs.createWriteStream(outputFile);
 
@@ -170,7 +168,7 @@ function writeCSV(outputFile, data) {
     });
 }
 
-// Run the script
+
 const inputFile = 'Modified_USERS_NG.csv';
-const outputFile = 'Modified_USERS_NG.csv'; // Use a new file to avoid overwriting
+const outputFile = 'Modified_USERS_NG.csv';
 processCSV(inputFile, outputFile);

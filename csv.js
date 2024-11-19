@@ -66,7 +66,7 @@ function generatePhoneNumber() {
 }
 
 function generateCustomerName(originalName) {
-    if (originalName === '') return ''; // keep empty if originally empty
+    if (originalName === '') return ''; 
     if (!customerNameMapping[originalName]) {
         customerNameMapping[originalName] = `AUTOGEN-clinic${customerNameCounter++}`;
     }
